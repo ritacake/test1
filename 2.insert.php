@@ -17,13 +17,13 @@ $msg=$_POST['msg'];
 $name=$_POST['myname'];
 
 if ($title) {
-	$sql = "insert into guestbook (title, msg, name) values (?, ?, ?)";
-	$stmt = mysqli_prepare($db, $sql); //prepare sql statement
-	mysqli_stmt_bind_param($stmt, "sss", $title, $msg,$name); //bind parameters with variables
-	mysqli_stmt_execute($stmt);  //執行SQL
-	echo "message added.";
+    $sql = "insert into guestbook (title, msg, name) values (?, ?, ?)";
+    $stmt = mysqli_prepare($db, $sql); //prepare sql statement
+    mysqli_stmt_bind_param($stmt, "sss", $title, $msg,$name); //bind parameters with variables
+    mysqli_stmt_execute($stmt);  //執行SQL
+    echo "message added.";
 } else {
-	echo "empty title, cannot insert.";
+    echo "empty title, cannot insert.";
 }
 ?>
 <hr>

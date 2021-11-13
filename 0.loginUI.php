@@ -1,6 +1,6 @@
 <?php
-	session_start(); //±Ò¥Îsession ¥\¯à, ¥²¶·¦bphpµ{¦¡ÁÙ¨S¿é¥X¥ô¦ó°T®§¤§«e±Ò¥Î
-	$_SESSION["userID"] = ""; //«Å§isession ÅÜ¼Æ¨Ã«ü©w­È
+    session_start(); //ï¿½Ò¥ï¿½session ï¿½\ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½bphpï¿½{ï¿½ï¿½ï¿½Ù¨Sï¿½ï¿½Xï¿½ï¿½ï¿½ï¿½Tï¿½ï¿½ï¿½ï¿½ï¿½eï¿½Ò¥ï¿½
+    $_SESSION["userID"] = ""; //ï¿½Å§isession ï¿½Ü¼Æ¨Ã«ï¿½ï¿½wï¿½ï¿½
 ?>
 <hr>
 <form method="post" action="0.login.php">

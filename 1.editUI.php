@@ -19,26 +19,26 @@
 <?php
 require("dbconfig.php");
 if(isset($_GET['id'])) {
-	$id=(int)$_GET['id'];
+  $id=(int)$_GET['id'];
 } else {
-	$id=0;
+  $id=0;
 }
 if ($id <=0) {
-	echo "empty ID";
-	exit(0);
+  echo "empty ID";
+  exit(0);
 } 
-	$sql = "select * from guestbook where id=?;";
-	$stmt = mysqli_prepare($db, $sql );
-	mysqli_stmt_bind_param($stmt, "i", $id);
-	mysqli_stmt_execute($stmt);
-	$result = mysqli_stmt_get_result($stmt); 
+  $sql = "select * from guestbook where id=?;";
+  $stmt = mysqli_prepare($db, $sql );
+  mysqli_stmt_bind_param($stmt, "i", $id);
+  mysqli_stmt_execute($stmt);
+  $result = mysqli_stmt_get_result($stmt); 
 if ($rs=mysqli_fetch_array($result)) {
 ?>
 <form method="post" action="2.update.php">
   <tr>
     <td><label>
       <input type="hidden" name="id" value="<?php echo $rs['id']; ?>" />
-	  <?php echo $rs['id']; ?>
+    <?php echo $rs['id']; ?>
     </label></td>
     <td><label>
       <input name="title" type="text" id="title" value="<?php echo htmlspecialchars($rs['title']); ?>"/>

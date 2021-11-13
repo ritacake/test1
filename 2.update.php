@@ -12,22 +12,22 @@
 <?php
 require("dbconfig.php");
 if(isset($_POST['id'])) {
-	$id=(int)$_POST['id'];
+    $id=(int)$_POST['id'];
 } else {
-	$id=0;
+    $id=0;
 }
 
 
 if ($id>0) {
-	$title=$_POST['title'];
-	$msg=$_POST['msg'];
-	$name=$_POST['myname'];
+    $title=$_POST['title'];
+    $msg=$_POST['msg'];
+    $name=$_POST['myname'];
 
-	$sql = "update guestbook set title=?, msg=?, name=? where id=?";
-	$stmt = mysqli_prepare($db, $sql);
-	mysqli_stmt_bind_param($stmt, "sssi", $title, $msg,$name, $id);
-	mysqli_stmt_execute($stmt); //執行SQL
-	echo "message updated";
+    $sql = "update guestbook set title=?, msg=?, name=? where id=?";
+    $stmt = mysqli_prepare($db, $sql);
+    mysqli_stmt_bind_param($stmt, "sssi", $title, $msg,$name, $id);
+    mysqli_stmt_execute($stmt); //執行SQL
+    echo "message updated";
 } else echo "empty message id.";
 ?>
 <hr>

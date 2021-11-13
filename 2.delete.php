@@ -12,20 +12,20 @@
 <?php
 require("dbconfig.php");
 if(isset($_GET['id'])) {
-	$id=(int)$_GET['id'];
+    $id=(int)$_GET['id'];
 } else {
-	$id=0;
+    $id=0;
 }
 
 if ($id>0) {
-	$sql = "delete from guestbook where id=?;";
-	$stmt = mysqli_prepare($db, $sql );
-	mysqli_stmt_bind_param($stmt, "i", $id);
-	mysqli_stmt_execute($stmt);
+    $sql = "delete from guestbook where id=?;";
+    $stmt = mysqli_prepare($db, $sql );
+    mysqli_stmt_bind_param($stmt, "i", $id);
+    mysqli_stmt_execute($stmt);
 
-	echo "message deleted.";
+    echo "message deleted.";
 } else {
-	echo "empty id, cannot delete.";
+    echo "empty id, cannot delete.";
 }
 ?>
 <hr>

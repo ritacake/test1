@@ -1,8 +1,8 @@
 <?php
 require_once("dbconfig.php");
-	 //±Ò¥Îsession ¥\¯à, ¥²¶·¦bphpµ{¦¡ÁÙ¨S¿é¥X¥ô¦ó°T®§¤§«e±Ò¥Î
-	$loginID = $_POST["id"];
-	$password = $_POST["pwd"];
+     //ï¿½Ò¥ï¿½session ï¿½\ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½bphpï¿½{ï¿½ï¿½ï¿½Ù¨Sï¿½ï¿½Xï¿½ï¿½ï¿½ï¿½Tï¿½ï¿½ï¿½ï¿½ï¿½eï¿½Ò¥ï¿½
+    $loginID = $_POST["id"];
+    $password = $_POST["pwd"];
 
 $sql = "select loginID,role,level from user where password=PASSWORD(?);";
 $stmt = mysqli_prepare($db, $sql );
@@ -10,15 +10,15 @@ mysqli_stmt_bind_param($stmt, "s", $password); //bind parameters with variables
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt); 
 if ($rs = mysqli_fetch_assoc($result)) {
-	if ($rs['loginID'] == $loginID) {
-		$_SESSION["userID"] = $loginID; //«Å§isession ÅÜ¼Æ¨Ã«ü©w­È
-		//$_SESSION["role"] = $rs['role']; //«Å§isession ÅÜ¼Æ¨Ã«ü©w­È
-		$_SESSION["role"] = $rs['level']; //«Å§isession ÅÜ¼Æ¨Ã«ü©w­È
-		header("Location: 1.listUI.php");
-	} else {
-		$_SESSION["userID"] = '';
-		$_SESSION["role"] = '';
-		header("Location: 0.loginUI.php");
-	}
+    if ($rs['loginID'] == $loginID) {
+        $_SESSION["userID"] = $loginID; //ï¿½Å§isession ï¿½Ü¼Æ¨Ã«ï¿½ï¿½wï¿½ï¿½
+        //$_SESSION["role"] = $rs['role']; //ï¿½Å§isession ï¿½Ü¼Æ¨Ã«ï¿½ï¿½wï¿½ï¿½
+        $_SESSION["role"] = $rs['level']; //ï¿½Å§isession ï¿½Ü¼Æ¨Ã«ï¿½ï¿½wï¿½ï¿½
+        header("Location: 1.listUI.php");
+    } else {
+        $_SESSION["userID"] = '';
+        $_SESSION["role"] = '';
+        header("Location: 0.loginUI.php");
+    }
 }
 ?>
