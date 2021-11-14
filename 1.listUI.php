@@ -44,7 +44,11 @@ $result = mysqli_stmt_get_result($stmt);
 while (	$rs = mysqli_fetch_assoc($result)) {
     $id=$rs['id'];
     echo "<tr><td>" , $rs['id'] ,
+    
+    // 加上一個超連結，可以顯示留言區
+    // 因為要知道是看哪一篇文章的留言，所以後面要接參數(?id=$id)
     "</td><td><a href='3.viewPost.php?id=$id'>" , $rs['title'],"</a>",
+    
     "</td><td>" , $rs['msg'], 
     "</td><td>", $rs['name'], "</td>",
     "</td><td>", $rs['likes'], "</td>",

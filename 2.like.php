@@ -1,5 +1,7 @@
 <?php
+// 連線 DB
 require("dbconfig.php");
+// 取得 ID
 if(isset($_GET['id'])) {
     $id=(int)$_GET['id'];
 } else {
