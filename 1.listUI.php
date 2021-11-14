@@ -1,7 +1,10 @@
+<!-- 確認是否登入過，確認進來的人都登入過 -->
 <?php
 require("dbconfig.php");
-if ( ! (checkAccess(1))) {
-	header("Location: 0.loginUI.php");
+
+// 如果沒登入過，跳轉到 0.loginUI.php
+if ( ! (checkAccess(1))) { 
+    header("Location: 0.loginUI.php");
 }
 
 ?>
@@ -14,7 +17,9 @@ if ( ! (checkAccess(1))) {
 
 <body>
 
-<p><?php echo "hello ",$_SESSION['userID'];  ?>	<a href='1.insertUI.php'>Add</a>
+<p><?php echo "Hello ",$_SESSION['userID'];  ?>	
+<a href='1.insertUI.php'>Add</a>
+<!-- 登出按鈕 -->
 <a href='0.loginUI.php'>logout</a>
 </p>
 <hr />
@@ -25,7 +30,7 @@ if ( ! (checkAccess(1))) {
     <td>message</td>
     <td>name</td>
     <td>讚</td>
-	<td>-</td>
+    <td>-</td>
   </tr>
 <?php
 
@@ -35,19 +40,22 @@ mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt); 
 
 while (	$rs = mysqli_fetch_assoc($result)) {
-	$id=$rs['id'];
-	echo "<tr><td>" , $rs['id'] ,
-	"</td><td><a href='3.viewPost.php?id=$id'>" , $rs['title'],"</a>",
-	"</td><td>" , $rs['msg'], 
-	"</td><td>", $rs['name'], "</td>",
-	"</td><td>", $rs['likes'], "</td>",
-	"<td><a href='2.like.php?id=", $rs['id'], "&t=1'>Like</a> ",
-	"<a href='2.like.php?id=", $rs['id'], "&t=-1'>Dislike</a> ";
-	if (checkAccess(5)) {
-		echo "<a href='2.delete.php?id=", $rs['id'], "'>Delete</a> ",
-		"<a href='1.editUI.php?id=", $rs['id'], "'>Edit</a>";
-	}
-	echo "</td></tr>";
+    $id=$rs['id'];
+    echo "<tr><td>" , $rs['id'] ,
+    "</td><td><a href='3.viewPost.php?id=$id'>" , $rs['title'],"</a>",
+    "</td><td>" , $rs['msg'], 
+    "</td><td>", $rs['name'], "</td>",
+    "</td><td>", $rs['likes'], "</td>",
+    "<td><a href='2.like.php?id=", $rs['id'], "&t=1'>Like</a> ",
+    "<a href='2.like.php?id=", $rs['id'], "&t=-1'>Dislike</a> ";
+    
+    // 希望只有管理員才能 delete、edit
+    // 如果不是管理員，就不會顯示這兩個按鈕
+    if (checkAccess(5)) {
+        echo "<a href='2.delete.php?id=", $rs['id'], "'>Delete</a> ",
+        "<a href='1.editUI.php?id=", $rs['id'], "'>Edit</a>";
+    }
+    echo "</td></tr>"; // 表格結尾
 }
 ?>
 </table>

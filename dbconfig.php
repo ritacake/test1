@@ -3,7 +3,7 @@ session_start();
 /*
 連線資料庫用的副程式
 */
-$host = ''; //執行DB Server 的主機
+$host = '127.0.0.1'; //執行DB Server 的主機
 $user = 'root'; //登入DB用的DB 帳號
 $pass = 'aiden891102'; //登入DB用的DB 密碼
 $dbName = '2021-1025-test'; //使用的資料庫名稱
@@ -20,6 +20,7 @@ function checkAccessRole($reqRole) {
     }
 }
 
+// 可以在需要檢查登入權限的程式碼加這個 function
 function checkAccess($reqLevel) {
     if (isset($_SESSION['role']) and $_SESSION['role'] >= $reqLevel) {
         return True;

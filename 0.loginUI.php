@@ -6,7 +6,8 @@
     // userID 可以自己取
 ?>
 <hr>
-<!-- 生成一個表單，送到 0.login.php 裡 -->
+<!-- 生成一個表單，
+把表單的資料送到 0.login.php 裡 -->
 <form method="post" action="0.login.php">
 ID <input type="text" name="id"> <br>
 
