@@ -1,3 +1,4 @@
+<!-- 單純執行 sql 語法，所以不寫 html，直接寫 php -->
 <?php
 // 連線 DB
 require("dbconfig.php");

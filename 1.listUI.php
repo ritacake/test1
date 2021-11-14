@@ -21,7 +21,7 @@ if ( ! (checkAccess(1))) {
 
 <p><?php echo "Hello ",$_SESSION['userID'];  ?>	
 <a href='1.insertUI.php'>Add</a>
-<!-- 登出按鈕 -->
+<!-- 登出按鈕 (0.loginUI.php 會清空session) -->
 <a href='0.loginUI.php'>logout</a>
 </p>
 <hr />
@@ -36,9 +36,12 @@ if ( ! (checkAccess(1))) {
   </tr>
 <?php
 
+// 把所有留言列出來
 $sql = "select * from guestbook order by id desc;";
 $stmt = mysqli_prepare($db, $sql );
+// 因為只是單純全部列出來，所以不用 bind
 mysqli_stmt_execute($stmt);
+// $result 是與資料庫相符的全部結果
 $result = mysqli_stmt_get_result($stmt); 
 
 while (	$rs = mysqli_fetch_assoc($result)) {

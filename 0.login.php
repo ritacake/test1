@@ -5,10 +5,10 @@ require_once("dbconfig.php");
     $password = $_POST["pwd"];
 
     // 密碼 = 加密過的密碼
+    // (SQL 語法) 輸入的密碼與 DB密碼 相同的資料列出來
 $sql = "select loginID,role,level from user where password=PASSWORD(?);";
-//$sql = "select loginID from user where password=PASSWORD(?);";
-
 $stmt = mysqli_prepare($db, $sql);
+// 告訴資料庫 $password 是 string
 mysqli_stmt_bind_param($stmt, "s", $password); // bind parameters with variables
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);

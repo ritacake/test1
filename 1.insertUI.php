@@ -18,9 +18,11 @@
     <td><label>
       <input name="title" type="text" id="title" />
     </label></td>
+
     <td><label>
       <input name="msg" type="text" id="msg" />
     </label></td>
+    
     <td><label>
       <input name="myname" type="text" id="myname" />
       <input type="submit" name="Submit" value="送出" />

@@ -30,7 +30,7 @@ if(isset($_GET['id'])) {
     <td>-</td>
   </tr>
 <?php
-// 因為只有一則，所以用 where，不是用 order by
+// 因為只有一則文章，所以用 where，不是用 order by
 $sql = "select * from guestbook where id=?;";
 $stmt = mysqli_prepare($db, $sql );
 // integer bind $id 進去
