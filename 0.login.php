@@ -5,8 +5,8 @@ require_once("dbconfig.php");
     $password = $_POST["pwd"];
 
     // 密碼 = 加密過的密碼
-// $sql = "select loginID,role,level from user where password=PASSWORD(?);";
-$sql = "select loginID from user where password=PASSWORD(?);";
+$sql = "select loginID,role,level from user where password=PASSWORD(?);";
+//$sql = "select loginID from user where password=PASSWORD(?);";
 
 $stmt = mysqli_prepare($db, $sql);
 mysqli_stmt_bind_param($stmt, "s", $password); // bind parameters with variables

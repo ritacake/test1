@@ -3,6 +3,8 @@
 require("dbconfig.php");
 
 // 如果沒登入過，跳轉到 0.loginUI.php
+// 0 代表每個人都可以進來
+// 5 是 admin
 if ( ! (checkAccess(1))) { 
     header("Location: 0.loginUI.php");
 }
