@@ -2,8 +2,9 @@
 // 連線 DB
 require("dbconfig.php");
 // 取得 ID
-if(isset($_GET['id'])) {
+if(isset($_GET['id']) ) {
     $id=(int)$_GET['id'];
+    // $resType=$_POST['resType'];
 } else { // 沒有 ID
     echo "invalid id";
     // 離開
@@ -61,18 +62,38 @@ $rs = mysqli_fetch_assoc($result);
 //fetch responses of this post
 // 把回覆意見抓出來，顯示出來
 // 把 mid 當成 FK 去查它的 response
-$sql = "select * from `response` where mid=? order by id;";
+$sql = "select * from `response` where mid=?  order by id;";
+// $sql = "select * from `response` where mid=? order by id";
 $stmt = mysqli_prepare($db, $sql );
 mysqli_stmt_bind_param($stmt, "i", $id);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt); 
+
+
+// 留言數
+$responseNum = mysqli_num_rows($result);
+//echo $responseNum;
+function responseColor($num){
+  $wordColor = "Black";
+  if ($num <= 5){
+    return $wordColor;
+  }
+  if($num > 5 && $num <= 10){
+    $wordColor = "Blue";
+    return $wordColor;
+  }
+  if($num >= 11){
+    $wordColor = "#FF0000";
+    return $wordColor;
+  }
+}
 
 // 把所有相同 mid 的抓出來
 // 用 while loop 抓
 // 每一筆留言都成為一個段落(<p>)
 while (	$rs = mysqli_fetch_assoc($result)) {
   // 將抓到的結果印出來
-    echo "<p>",$rs['msg'],"</p>";
+  echo "<p><font color=",responseColor($responseNum),">",$rs['msg'],"</font></p>";
 }
 ?>
 
@@ -83,6 +104,12 @@ while (	$rs = mysqli_fetch_assoc($result)) {
 
 <!-- post 要用 post的方式取得 -->
 <form method="post" action="3.response.php">
+    <td>
+    留言類別:<select name="resType" id="resType">
+    <option value=chat>閒聊</option>
+    <option value=mood>心情</option>
+    <option value=gossip>八卦</option>
+    </select></td>
     <td><label>
       <!-- 屬於哪一篇文章的回覆，但不希望被使用者看到，所以用 type="hidden"
     那 mid 的值可以echo 進去 -->

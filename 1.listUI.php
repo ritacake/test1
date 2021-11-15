@@ -1,6 +1,7 @@
 <!-- 確認是否登入過，確認進來的人都登入過 -->
 <?php
 require("dbconfig.php");
+//require("3.viewPost.php");
 
 // 如果沒登入過，跳轉到 0.loginUI.php
 // 0 代表每個人都可以進來
@@ -36,21 +37,55 @@ if ( ! (checkAccess(1))) {
   </tr>
 <?php
 
-// 把所有留言列出來
+// 把所有清單列出來
 $sql = "select * from guestbook order by id desc;";
-$stmt = mysqli_prepare($db, $sql );
+$stmt = mysqli_prepare($db, $sql);
 // 因為只是單純全部列出來，所以不用 bind
 mysqli_stmt_execute($stmt);
 // $result 是與資料庫相符的全部結果
 $result = mysqli_stmt_get_result($stmt); 
 
+// 留言數量
+    // $num = ResponseNum($db, $id);
+    // echo $num;
+
+  // 顯示選單
+    // echo "<form method=get action=3.viewPost.php>",
+    // "<tr>留言類別:<select name=resType id=resType>",
+    // "<option value=chat>閒聊</option>",
+    // "<option value=mood>心情</option>",
+    // "<option value=gossip>八卦</option></select></tr>";
+    
+    // // echo " <tr>文章選擇:<select name=id id=id>";
+    // // while ($rs = mysqli_fetch_assoc($result)){
+    // //   $id=$rs['id'];
+    // //   echo "<option value=",$id,">",$rs['title'],"</option>";
+    // // }
+
+    // // echo "</select></tr>";
+    // echo "<tr><input type=button value=搜尋留言 name=search id=search></tr>";
+    // echo "</form>";
+
+    echo "<form method=post action='3.viewPost.php'>",
+    "<tr>留言類別:<select name=resType id=resType>",
+    "<option value=chat>閒聊</option>",
+    "<option value=mood>心情</option>",
+    "<option value=gossip>八卦</option></select></tr>";
+    // echo "<tr>文章選擇:<select name=id id=id>";
+    // while (	$rs = mysqli_fetch_assoc($result)) {
+    //   $id=$rs['id'];
+    //   echo "<option value=", $id ,">",$rs['title'],"</option>";
+    // }
+    echo "</select></tr>";
 while (	$rs = mysqli_fetch_assoc($result)) {
     $id=$rs['id'];
+
     echo "<tr><td>" , $rs['id'] ,
     
     // 加上一個超連結，可以顯示留言區
     // 因為要知道是看哪一篇文章的留言，所以後面要接參數(?id=$id)
     "</td><td><a href='3.viewPost.php?id=$id'>" , $rs['title'],"</a>",
+    // "</td><td>" , $rs['title'],
     
     "</td><td>" , $rs['msg'], 
     "</td><td>", $rs['name'], "</td>",
@@ -64,8 +99,8 @@ while (	$rs = mysqli_fetch_assoc($result)) {
         echo "<a href='2.delete.php?id=", $rs['id'], "'>Delete</a> ",
         "<a href='1.editUI.php?id=", $rs['id'], "'>Edit</a>";
     }
-    echo "</td></tr>"; // 表格結尾
 }
+
 ?>
 </table>
 </body>
