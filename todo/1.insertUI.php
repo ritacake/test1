@@ -5,26 +5,24 @@
 <title>input form</title>
 </head>
 <body>
-<p>my guest book !! </p>
+<p>Add new Job!! </p>
 <hr />
 
 <table width="200" border="1">
   <tr>
     <td>title</td>
     <td>note</td>
-    <td>-----</td>
+    <td></td
   </tr>
-  <tr><form method="post" action="2.insert.php">
+  <tr><form method="post" action="todoControl.php">
+  <input name="act" type="hidden" value='addJob' />
     <td><label>
       <input name="title" type="text" id="title" />
     </label></td>
-
     <td><label>
       <input name="note" type="text" id="note" />
     </label></td>
-    
     <td><label>
-      <!-- <input name="myname" type="text" id="myname" /> -->
       <input type="submit" name="Submit" value="送出" />
     </label></td>
 	</form>
