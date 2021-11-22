@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 /*
 連線資料庫用的副程式
@@ -12,22 +12,19 @@ $db = mysqli_connect($host, $user, $pass, $dbName) or die('Error with MySQL conn
 
 mysqli_query($db,"SET NAMES utf8"); //設定編碼為 unicode utf8
 
-// 可以在需要檢查登入權限的程式碼加這個 function
 function checkAccessRole($reqRole) {
-    if (isset($_SESSION['role']) and $_SESSION['role']==$reqRole) {
-        return True;
-    } else {
-        return False;
-    }
+	if (isset($_SESSION['role']) and $_SESSION['role']==$reqRole) {
+		return True;
+	} else {
+		return False;
+	}
 }
 
-// 可以在需要檢查登入權限的程式碼加這個 function
-// 利用數字的大小決定權限
 function checkAccess($reqLevel) {
-    if (isset($_SESSION['role']) and $_SESSION['role'] >= $reqLevel) {
-        return True;
-    } else {
-        return False;
-    }
+	if (isset($_SESSION['role']) and $_SESSION['role'] >= $reqLevel) {
+		return True;
+	} else {
+		return False;
+	}
 }
 ?>

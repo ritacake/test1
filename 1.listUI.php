@@ -1,5 +1,5 @@
 <!-- 確認是否登入過，確認進來的人都登入過 -->
-<?php
+<?php  
 require("dbconfig.php");
 //require("3.viewPost.php");
 
