@@ -15,6 +15,8 @@
     <td></td
   </tr>
   <tr><form method="post" action="todoControl.php">
+  <!-- 多送一個參數，名字叫"act", 不顯示, value='addJob'(value的值可以自己取)  -->
+  <!-- 多送一個訊息說我現在要做甚麼事 ，也就是 'addJob' -->
   <input name="act" type="hidden" value='addJob' />
     <td><label>
       <input name="title" type="text" id="title" />
