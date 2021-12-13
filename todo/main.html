@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AJAX example</title>
+
+    <!-- import CSS 
+    <link rel="stylesheet" href="js/jquery-ui.min.css">
+    <style>
+    </style>
+	<script src="js/vue.global.prod.js"></script>
+
+-->
+	<script>
+	function loadList() {
+		fetch("todoControlAjax.php?act=getList")
+		.then(function(resp){
+			//console.log(resp);
+			return resp.json();
+		})
+		.then(function(json) {
+			if (json){
+				let tableStr = "<table>";
+				for ( let row of json) {
+					tableStr += "<tr><td>" + row['title'];
+					tableStr += "</td><td>" + row['note'];
+					tableStr += "</td><td><button onclick='setJobDone(" + row['id'] + ")'> 已完成</button></td></tr>";
+				}
+				tableStr += "</table>";
+				document.getElementById("main").innerHTML=tableStr;
+			}
+		})
+	}
+
+	function setJobDone(id) {
+		fetch("todoControlAjax.php?act=setFinish&id=" + id)
+		.then(function(resp){
+			//console.log(resp);
+			return resp.text();
+		})
+		.then(function(rr) {
+			if (rr){
+				console.log(rr)
+				loadList()
+			}
+		})
+	}
+	
+	function postData(url,keyword) {
+		let mydat = new FormData();
+		
+		mydat.append( "f",keyword);
+		fetch(url,{
+			method: 'POST', // or 'GET', 'PUT'
+			body: mydat
+			//body: JSON.stringify(data)
+		})
+		//.then(function(resp){return resp.text();})		
+		.then(
+			function(res) {
+				//console.log(res)
+				return res.json();
+			}
+		)
+		.then(
+			function(data) {
+				console.log(data)
+				//x=data[3]['b']
+				json2table(data,'main');
+			}
+		)
+	}
+	
+	function postForm(url,formID) {
+		let mydat = new FormData();
+		myform = document.getElementById(formID);		
+		for (const pair of new FormData(myform)) {
+			mydat.append(pair[0], pair[1]);
+		}
+		fetch(url,{
+			method: 'POST',
+			body: mydat
+		})
+		//.then(function(resp){return resp.text();})		
+		.then(
+			function(res) {
+				//console.log(res)
+				return res.json();
+			}
+		)
+		.then(
+			function(data) {
+				//console.log(data)
+				json2table(data,'main');
+			}
+		)
+	}
+
+	
+	function json2table(json,divID) {
+		// Get keys (=cells) of each items
+		const keys = Object.keys(json[0]);
+
+		// Build the table header
+		const header = `<thead><tr>` + 
+		keys.map(key => `<th>${key}</th>`)
+		  .join('') + `</thead></tr>`;
+  
+		// Build the table body
+		const body = `<tbody>` +
+		  json.map(row => `<tr>${Object.values(row)
+			.map(cell => `<td>${cell}</td>`)
+			.join('')}</tr>`
+		  ).join('');
+
+		// Build the final table
+		const table = `
+		<table border='1'>
+		  ${header}
+		  ${body}
+		</table>
+		`;
+  
+		// Append the result into #root element
+		document.getElementById(divID).innerHTML = table;
+	}
+
+	function loadJSON() {
+		let keyw=document.getElementById('myurl').value;
+		postData("3.php", keyw);
+	}
+	</script>
+  </head>
+  <body>
+  <button onclick="loadList()">列出代辦事項</button>
+  <button onclick="loadAddForm()">新增工作</button>
+<!-- main working div-->
+<div id="main">hello</div>
+</body>
+</html>
