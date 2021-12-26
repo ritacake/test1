@@ -137,13 +137,17 @@
       <!-- 文字方塊 按鈕 -->
   URL: 
   <!-- 下拉式選單 -->
-    <select id='xurl' onchage="loadPage()">
+  <!-- 或是寫 onchange 的寫法 -->
+  <!-- <select id='myurl' onchange="loadPage()"> -->
+    <select id='myurl' >
         <option value='1.php'>page 1</option>
         <option value='2.php?f=1.jpg'>page 2:1.jpg</option>
         <option value='2.php?f=2.jpg'>page 2:2.jpg</option>
     </select>
 
+    <!-- 方法一 -->
     <a href="javascript:loadPage()">loadPage</a>
+    <!-- 方法二 標籤# -->
     <a href="#" onclick="loadPage()">loadPage</a>
 
     <input id="myurl" type='text'> 

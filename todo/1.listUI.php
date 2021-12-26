@@ -21,14 +21,14 @@ require("todoModel.php");
     <td>title</td>
     <td>note</td>
     <td>start</td>
-	<td>finish</td>
-	<td>-</td>
+    <td>finish</td>
+    <td>list</td>
   </tr>
 <?php
 if (isset($_GET['t'])) {
-	$t=(int)$_GET['t'];
+    $t=(int)$_GET['t'];
 } else {
-	$t=0;
+    $t=0;
 }
 
 // 透過 todoModel.php 中的 getJobList() 去取得所有工作資料
@@ -37,14 +37,14 @@ $result = getJobList($t);
 // $result 是所有的工作資料
 // $job 是$result其中 "一筆" 工作資料
 foreach ($result as $job){
-	echo "<tr><td>" , $job['id'] ,
-	"</td><td>", $job['title'],
-	"</td><td>" , $job['note'], 
-	"</td><td>", $job['start'], "</td>",
-	"</td><td>", $job['finish'], "</td>",
+    echo "<tr><td>" , $job['id'] ,
+    "</td><td>", $job['title'],
+    "</td><td>" , $job['note'], 
+    "</td><td>", $job['start'], "</td>",
+    "</td><td>", $job['finish'], "</td>",
     // 放一個 工作結束的按鈕叫 done (setFinish)
-	"</td><td><a href='todoControl.php?act=setFinish&id=", $job['id'], "'>done</a></td>";
-	echo "</tr>";
+    "</td><td><a href='todoControl.php?act=setFinish&id=", $job['id'], "'>done</a></td>";
+    echo "</tr>";
 }
 ?>
 </table>

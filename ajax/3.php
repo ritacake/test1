@@ -11,7 +11,7 @@ $sql="select * from todo where title like ?";
 	$stmt = mysqli_prepare($db, $sql); //prepare sql statement
 	mysqli_stmt_bind_param($stmt, "s", $f2); //bind parameters with variables
 	mysqli_stmt_execute($stmt);  //執行SQL
-	$result = mysqli_stmt_get_result($stmt);
+	$result = mysqli_stmt_get_result($stmt); // 從 $stmt 裡取出資料
 	$rows = array(); // 存所有查詢的結果
 
 	// 從裡面抓出一筆資料
@@ -31,6 +31,6 @@ $sql="select * from todo where title like ?";
 	// }
 
 
-// 把它轉成json格式的字串
+// 把它轉成符合 json 格式的字串
 echo json_encode($rows);
 ?>

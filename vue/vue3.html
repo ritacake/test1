@@ -1,4 +1,4 @@
-﻿<html><head>
+<html><head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <script type="text/javascript" src="vue.global.js"></script>
 
@@ -6,14 +6,14 @@
 
 <body >
 <fieldset>
-	<legend>app</legend>
+    <legend>app</legend>
 <div id="app">
   {{ message }}
 </div>
 </fieldset>
 
 <fieldset>
-	<legend>app-2</legend>
+    <legend>app-2</legend>
 <div id="app-2">
   <span v-bind:title="message">
     Hover your mouse over me for a few seconds
@@ -23,14 +23,14 @@
 </fieldset>
 
 <fieldset>
-	<legend>app-3</legend>
+    <legend>app-3</legend>
 <div id="app-3">
   <span v-if="seen">Now you see me</span>
 </div>
 </fieldset>
 
 <fieldset>
-	<legend>app-4</legend>
+    <legend>app-4</legend>
 <div id="app-4">
   <ol>
     <li v-for="todo in todos">
@@ -41,7 +41,7 @@
 </fieldset>
 
 <fieldset>
-	<legend>app-5</legend>
+    <legend>app-5</legend>
 <div id="app-5">
   <p>{{ message }}</p>
   <button v-on:click="reverseMessage">Reverse Message</button>
@@ -49,19 +49,19 @@
 </fieldset>
 
 <fieldset>
-	<legend>app-6</legend>
+    <legend>app-6</legend>
 <div id="app-6">
   <p>{{ message }}</p>
   <input v-model="message">
 <!--  	<div v-for="(value, key, index) in dat">
-		{{ index }} -- {{ key }}: {{ value }} -->
-	<br>
-	<div v-for="value in dat">
-	  <ol>
-	{{ value }}
-	  </ol>
+        {{ index }} -- {{ key }}: {{ value }} -->
+    <br>
+    <div v-for="value in dat">
+      <ol>
+    {{ value }}
+      </ol>
 
-	</div>
+    </div>
 
 <button onclick="loadData()">load json to app-6 </button>
 
@@ -69,7 +69,7 @@
 </fieldset>
 
 <fieldset>
-	<legend>app-7</legend>
+    <legend>app-7</legend>
 <div id="app-7">
   <ol>
     <!--
@@ -90,77 +90,77 @@
 <script language="javascript">
 
 const vm1= Vue.createApp({
-	data() {
-		return {
-			message: 'Hello Vue!'
-		}
-	}
+    data() {
+        return {
+            message: 'Hello Vue!'
+        }
+    }
 }).mount('#app');
 
 const vm2= Vue.createApp({
-	data() {
-		return {
-			message: 'You loaded this page on ' + new Date().toLocaleString()
-		}
-	}
+    data() {
+        return {
+            message: 'You loaded this page on ' + new Date().toLocaleString()
+        }
+    }
 }).mount('#app-2');
 
 const vm3= Vue.createApp({
-	data() {
-		return {
-			seen: true
-		}
-	}
+    data() {
+        return {
+            seen: true
+        }
+    }
 }).mount("#app-3");
 
 const vm4= Vue.createApp({
-	data() {
-		return {
-			todos: [
-				{ text: 'Learn JavaScript' },
-				{ text: 'Learn Vue' },
-				{ text: 'Build something awesome' }
-			]
-		}
-	}
+    data() {
+        return {
+            todos: [
+                { text: 'Learn JavaScript' },
+                { text: 'Learn Vue' },
+                { text: 'Build something awesome' }
+            ]
+        }
+    }
 }).mount("#app-4");
 
 vm4.todos.push({ text: 'New item' })
 
 const vm5= Vue.createApp({
-	data() {
-		return {
-			message: 'Hello Vue.js!'
-		}
-	},
-	methods: {
-		reverseMessage: function () {
-			this.message = this.message.split('').reverse().join('')
-		}
-	}
+    data() {
+        return {
+            message: 'Hello Vue.js!'
+        }
+    },
+    methods: {
+        reverseMessage: function () {
+            this.message = this.message.split('').reverse().join('')
+        }
+    }
 })
 vm5.mount("#app-5");
 
 const vm6= Vue.createApp({
-	data() {
-		return {
-			message: 'Hello Vue!',
-			dat: []
-		}
-	}
+    data() {
+        return {
+            message: 'Hello Vue!',
+            dat: []
+        }
+    }
 }).mount("#app-6");
 
 // Define a new component called todo-item
 
 const vm7= Vue.createApp({
   data() {
-	return {
-		groceryList: [
-		  { id: 0, text: 'Vegetables' },
-		  { id: 1, text: 'Cheese' },
-		  { id: 2, text: 'Whatever else humans are supposed to eat' }
-		]
-	}
+    return {
+        groceryList: [
+          { id: 0, text: 'Vegetables' },
+          { id: 1, text: 'Cheese' },
+          { id: 2, text: 'Whatever else humans are supposed to eat' }
+        ]
+    }
   }
 })
 vm7.component('todo-item', {
@@ -179,7 +179,7 @@ fetch('json.php')
     return response.json();
   })
   .then(function(myJson) {
-	vm6.dat = myJson;
+    vm6.dat = myJson;
   });
 }
 </script>
