@@ -22,11 +22,11 @@ function getJobList($type=0) {
 	$aa[]=$a;
 	return  $aa;
 	*/
-	if ($type==1) { //已完成工作
+	if ($type==1) { // 已完成工作
 		$sql = "select * from todo where not isnull(finish) order by id desc;";
-	} else if ($type==2) { //未完成工作
+	} else if ($type==2) { // 未完成工作
 		$sql = "select * from todo where isnull(finish) order by id desc;";
-	} else { //所有工作
+	} else { // 所有工作
 		$sql = "select * from todo order by id desc;";		
 	}
 	$stmt = mysqli_prepare($db, $sql );
@@ -48,6 +48,7 @@ function getJobList($type=0) {
 
 
 function setFinished($id){
+	// 使用 server id 去做連線
 	global $db;
 	$sql = "update todo set finish=now() where id=?;";
 	$stmt = mysqli_prepare($db, $sql); //prepare sql statement

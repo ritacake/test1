@@ -3,7 +3,7 @@ session_start();
 /*
 連線資料庫用的副程式
 */
-$host = '127.0.0.1'; //執行DB Server 的主機
+$host = 'localhost'; //執行DB Server 的主機
 $user = 'root'; //登入DB用的DB 帳號
 $pass = ''; //登入DB用的DB 密碼
 $dbName = 'test'; //使用的資料庫名稱

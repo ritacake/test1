@@ -14,7 +14,8 @@
 
 -->
 	<script>
-	function loadList() {
+	function loadList() { // 更新清單畫面
+		// 跟 server (control) fetch 一筆資料，再轉成 Json
 		fetch("todoControlAjax.php?act=getList")
 		.then(function(resp){
 			//console.log(resp);
@@ -23,6 +24,7 @@
 		.then(function(json) {
 			if (json){
 				let tableStr = "<table>";
+				// let 宣告內部函數變數
 				for ( let row of json) {
 					tableStr += "<tr><td>" + row['title'];
 					tableStr += "</td><td>" + row['note'];
@@ -35,14 +37,16 @@
 	}
 
 	function setJobDone(id) {
+		// alert(id); 確認抓到的 id 是對的
 		fetch("todoControlAjax.php?act=setFinish&id=" + id)
 		.then(function(resp){
 			//console.log(resp);
-			return resp.text();
+			return resp.text(); // 因為是要印出 OK，所以不轉成 JSON，而是轉成 text
 		})
 		.then(function(rr) {
 			if (rr){
 				console.log(rr)
+				// 因為是更新清單畫面，所以直接 call loadList() 就可以了~
 				loadList()
 			}
 		})
