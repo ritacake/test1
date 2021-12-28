@@ -12,7 +12,7 @@
   <tr>
     <td>title</td>
     <td>note</td>
-    <td></td
+    <td></td>
   </tr>
   <tr><form method="post" action="todoControl.php">
   <!-- 多送一個參數，名字叫"act", 不顯示, value='addJob'(value的值可以自己取)  -->

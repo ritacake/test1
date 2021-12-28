@@ -25,9 +25,19 @@ switch ($act) {
 		}
 		echo "OK";		
 		break;
-    // 產生一個 List
-	case "getList":
+	// 產生一個 已完成工作 List
+	case "getList1":
+		$list = getJobList(1); // 已完成工作 List
+		echo json_encode($list); // 將 $list encode 成一個 json 
+		break;
+	// 產生一個 未完成工作 List
+	case "getList2":
 		$list = getJobList(2); // 未完成工作 List
+		echo json_encode($list); // 將 $list encode 成一個 json 
+		break;
+    // 產生一個 所有工作 List
+	case "getList3":
+		$list = getJobList(3); // 所有工作 List
 		echo json_encode($list); // 將 $list encode 成一個 json 
 		break;
 	default:
