@@ -25,11 +25,6 @@ function loadAddForm(title, note){
   </tr>
 </table>
 
-
-function loadAddForm(title, note){
-		
-}
-
 function postAddForm(title, note){
     fetch("todoControlAjax.php?act=addJob&title=" + title + "&note=" + note)
     .then(function(resp){
