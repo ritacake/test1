@@ -12,16 +12,6 @@ function addJob($title,$note) {
  
 function getJobList($type=0) {
 	global $db;
-	/*
-	$a=array();
-	$a['id']=10;
-	$a['title']='test';
-	$a['note']='note';
-	$a['start']='123';
-	$a['finish']=null;
-	$aa[]=$a;
-	return  $aa;
-	*/
 	if ($type==1) { // 已完成工作
 		$sql = "select * from todo where not isnull(finish) order by id desc;";
 	} else if ($type==2) { // 未完成工作
@@ -54,7 +44,6 @@ function setFinished($id){
 	$stmt = mysqli_prepare($db, $sql); //prepare sql statement
 	mysqli_stmt_bind_param($stmt, "i", $id); //bind parameters with variables
 	mysqli_stmt_execute($stmt);  //執行SQL
-
 	return true;
 }
 ?>

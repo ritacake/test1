@@ -61,15 +61,22 @@
         )
     }
     
+    // url    
+    // formID 哪個 form
     function postForm(url,formID) {
+        // 把表單裡的值，變成新的 FormData 的形式
         let mydat = new FormData();
-        myform = document.getElementById(formID);		
+        myform = document.getElementById(formID);	
+        // pair 表單裡的每個欄位	
         for (const pair of new FormData(myform)) {
+            // 把欄位裡的名稱、值塞進表單裡
+            // pair[0]:pair[1] = key:value
             mydat.append(pair[0], pair[1]);
         }
         fetch(url,{
             method: 'POST',
             body: mydat
+            // 把填好的東西(mydat)放在body裡面，當成送出去的表單
         })
         //.then(function(resp){return resp.text();})		
         .then(
@@ -99,23 +106,23 @@
         // .join(''): 加上 ''
         // 反正就是變成html的語法拉
         const header = `<thead><tr>` + 
-		keys.map(key => `<th>${key}</th>`)
-		  .join('') + `</thead></tr>`;
+        keys.map(key => `<th>${key}</th>`)
+          .join('') + `</thead></tr>`;
   
         // Build the table body
         const body = `<tbody>` +
-		  json.map(row => `<tr>${Object.values(row)
-			.map(cell => `<td>${cell}</td>`)
-			.join('')}</tr>`
-		  ).join('');
+          json.map(row => `<tr>${Object.values(row)
+            .map(cell => `<td>${cell}</td>`)
+            .join('')}</tr>`
+          ).join('');
 
         // Build the final table
         const table = `
-		<table border='1'>
-		  ${header}
-		  ${body}
-		</table>
-		`;
+        <table border='1'>
+          ${header}
+          ${body}
+        </table>
+        `;
   
         // Append the result into #root element
         document.getElementById(divID).innerHTML = table;
@@ -123,8 +130,8 @@
 
     function loadPage() {
         let url=document.getElementById('myurl').value;
-		//console.log(url);
-		loadURL(url, 'main'); // 把 url網址 和main的內容 塞到 loadURL
+        //console.log(url);
+        loadURL(url, 'main'); // 把 url網址 和main的內容 塞到 loadURL
     }
     
     function loadJSON() {

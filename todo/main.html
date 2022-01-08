@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-Hant-TW">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,140 +11,201 @@
     <link rel="stylesheet" href="js/jquery-ui.min.css">
     <style>
     </style>
-	<script src="js/vue.global.prod.js"></script>
+    <script src="js/vue.global.prod.js"></script>
 
 -->
-	<script>
-	function loadList(int) { // 更新清單畫面
-		// 跟 server (control) fetch 一筆資料，再轉成 Json
-		fetch("todoControlAjax.php?act=getList"+int)
-		.then(function(resp){
-			//console.log(resp);
-			return resp.json();
-		})
-		.then(function(json) {
-			if (json){
-				let tableStr = "<table border=1>";
-				// let 宣告內部函數變數
-				for ( let row of json) {
-					tableStr += "<tr><td>" + row['title'];
-					tableStr += "</td><td>" + row['note'];
-					if(int == 2)
-						tableStr += "</td><td><button onclick='setJobDone(" + row['id'] + ")'> 已完成</button></td></tr>";
-				}
-				tableStr += "</table>";
-				document.getElementById("main").innerHTML=tableStr;
-			}
-		})
-	}
+    <script>
+        // 載入 新增工作 的表格
+        function addJobTable(divID) {
+            // Build the table header
+            const header =
+                `<tr>
+                    <td>title</td>
+                    <td>note</td>
+                    <td></td>
+                </tr>`;
 
-	function setJobDone(id) {
-		// alert(id); 確認抓到的 id 是對的
-		fetch("todoControlAjax.php?act=setFinish&id=" + id)
-		.then(function(resp){
-			//console.log(resp);
-			return resp.text(); // 因為是要印出 OK，所以不轉成 JSON，而是轉成 text
-		})
-		.then(function(rr) {
-			if (rr){
-				console.log(rr)
-				// 因為是更新清單畫面，所以直接 call loadList() 就可以了~
-				loadList(2)
-			}
-		})
-	}
-	
-	function postData(url,keyword) {
-		let mydat = new FormData();
-		
-		mydat.append( "f",keyword);
-		fetch(url,{
-			method: 'POST', // or 'GET', 'PUT'
-			body: mydat
-			//body: JSON.stringify(data)
-		})
-		//.then(function(resp){return resp.text();})		
-		.then(
-			function(res) {
-				//console.log(res)
-				return res.json();
-			}
-		)
-		.then(
-			function(data) {
-				console.log(data)
-				//x=data[3]['b']
-				json2table(data,'main');
-			}
-		)
-	}
-	
-	function postForm(url,formID) {
-		let mydat = new FormData();
-		myform = document.getElementById(formID);		
-		for (const pair of new FormData(myform)) {
-			mydat.append(pair[0], pair[1]);
-		}
-		fetch(url,{
-			method: 'POST',
-			body: mydat
-		})
-		//.then(function(resp){return resp.text();})		
-		.then(
-			function(res) {
-				//console.log(res)
-				return res.json();
-			}
-		)
-		.then(
-			function(data) {
-				//console.log(data)
-				json2table(data,'main');
-			}
-		)
-	}
+            // Build the table body
+            const body = `<tr>
+                <form id="addJobForm" method="post" action="">
+                <input name="act" type="hidden" value='addJob' />
+                <td><label>
+                        <input name="title" type="text" id="title" />
+                    </label></td>
+                <td><label>
+                        <input name="note" type="text" id="note" />
+                    </label></td>
+                <td><label>
+                        <button onclick="postForm('todoControlAjax.php?act=addJob', 'addJobForm')">送出</button>
+                    </label></td>
+            </form>
+                </tr>`;
 
-	
-	function json2table(json,divID) {
-		// Get keys (=cells) of each items
-		const keys = Object.keys(json[0]);
+            // Build the final table
+            const table = `
+        <table width="200" border='2'>
+          ${header}
+          ${body}
+        </table>
+        `;
 
-		// Build the table header
-		const header = `<thead><tr>` + 
-		keys.map(key => `<th>${key}</th>`)
-		  .join('') + `</thead></tr>`;
-  
-		// Build the table body
-		const body = `<tbody>` +
-		  json.map(row => `<tr>${Object.values(row)
-			.map(cell => `<td>${cell}</td>`)
-			.join('')}</tr>`
-		  ).join('');
+            // Append the result into #root element
+            document.getElementById(divID).innerHTML = table;
+        }
 
-		// Build the final table
-		const table = `
-		<table border='1'>
-		  ${header}
-		  ${body}
-		</table>
-		`;
-  
-		// Append the result into #root element
-		document.getElementById(divID).innerHTML = table;
-	}
+        // 更新清單畫面    
+        function loadList(int) {
+            // 跟 server (control) fetch 一筆資料，再轉成 Json
+            fetch("todoControlAjax.php?act=getList" + int)
+                .then(function (resp) {
+                    //console.log(resp);
+                    return resp.json();
+                })
+                .then(function (json) {
+                    if (json) {
+                        let tableStr = "<table border=1>";
+                        // let 宣告內部函數變數
+                        for (let row of json) {
+                            tableStr += "<tr><td>" + row['title'];
+                            tableStr += "</td><td>" + row['note'];
+                            if (int == 2)
+                                tableStr += "</td><td><button onclick='setJobDone(" + row['id'] + ")'> 已完成</button></td></tr>";
+                        }
+                        tableStr += "</table>";
+                        document.getElementById("main").innerHTML = tableStr;
+                    }
+                })
+        }
 
-	function loadJSON() {
-		let keyw=document.getElementById('myurl').value;
-		postData("3.php", keyw);
-	}
-	</script>
-  </head>
-  <body>
-  <button onclick="loadList(1)">列出已完成事項</button>
-  <button onclick="loadList(2)">列出未完成事項</button>
-  <button onclick="loadList(3)">列出所有事項</button>
-  <button onclick="loadAddForm()">新增工作</button>
-<!-- main working div-->
-<div id="main">hello</div>
+        function setJobDone(id) {
+            // alert(id); 確認抓到的 id 是對的
+            fetch("todoControlAjax.php?act=setFinish&id=" + id)
+                .then(function (resp) {
+                    //console.log(resp);
+                    return resp.text(); // 因為是要印出 OK，所以不轉成 JSON，而是轉成 text
+                })
+                .then(function (rr) {
+                    if (rr) {
+                        console.log(rr)
+                        // 因為是更新清單畫面，所以直接 call loadList() 就可以了~
+                        loadList(2)
+                    }
+                })
+        }
+
+        // url    
+        // formID 哪個 form
+        function postForm(url, formID) {
+            // 把表單裡的值，變成新的 FormData 的形式
+            let mydat = new FormData();
+            myform = document.getElementById(formID);
+            // 根據 myForm 產生一個 FormData 的物件
+            // pair 表單裡的每個欄位	
+            for (const pair of new FormData(myform)) {
+                // 把欄位裡的名稱、值塞進表單裡
+                // pair[0]:pair[1] = key:value
+                mydat.append(pair[0], pair[1]);
+            }
+            fetch(url, {
+                method: 'POST',
+                body: mydat
+                // 把填好的東西(mydat)放在body裡面，當成送出去的表單
+            })
+                //.then(function(resp){return resp.text();})		
+                .then(
+                    function (res) {
+                        console.log(res)
+                        return res.json();
+                    }
+                )
+            // .then(
+            //     function (data) {
+            //         console.log(data)
+            //         // 把 data 放進 main
+            //         loadList(3);
+            //         // json2table(data, 'main');
+            //     }
+            // )
+        }
+
+
+        function json2table(json, divID) {
+            // Get keys (=cells) of each items
+            const keys = Object.keys(json[0]);
+
+            // Build the table header
+            const header = `<thead><tr>` +
+                keys.map(key => `<th>${key}</th>`)
+                    .join('') + `</thead></tr>`;
+
+            // Build the table body
+            const body = `<tbody>` +
+                json.map(row => `<tr>${Object.values(row)
+                    .map(cell => `<td>${cell}</td>`)
+                    .join('')}</tr>`
+                ).join('');
+
+            // Build the final table
+            const table = `
+        <table border='1'>
+          ${header}
+          ${body}
+        </table>
+        `;
+
+            // Append the result into #root element
+            document.getElementById(divID).innerHTML = table;
+        }
+
+        function loadJSON() {
+            let keyw = document.getElementById('myurl').value;
+            postData("3.php", keyw);
+        }
+    </script>
+</head>
+
+<body>
+
+    <!-- <p><a href='insertUI.php'></a></p> -->
+    <p><button onclick="addJobTable('addJobTable')">新增工作</button></p>
+    <p>新增工作</p>
+    <table width="200" border="1">
+        <tr>
+            <td>title</td>
+            <td>note</td>
+            <td></td>
+        </tr>
+        <tr>
+            <form id="addJobForm" method="post" action="">
+                <!-- 多送一個參數，名字叫"act", 不顯示, value='addJob'(value的值可以自己取)  -->
+                <!-- 多送一個訊息說我現在要做甚麼事 ，也就是 'addJob' -->
+                <input name="act" type="hidden" value='addJob' />
+                <td><label>
+                        <input name="title" type="text" id="title" />
+                    </label></td>
+                <td><label>
+                        <input name="note" type="text" id="note" />
+                    </label></td>
+                <td><label>
+                        <!-- <input type="submit" name="Submit" value="送出" /> -->
+                        <button onclick="postForm('todoControlAjax.php?act=addJob', 'addJobForm')">送出</button>
+                    </label></td>
+            </form>
+        </tr>
+    </table>
+
+    <div id="addJobTable"></div>
+    <div id="newJob"></div>
+
+    <hr>
+    <button onclick="loadList(1)">列出已完成事項</button>
+    <button onclick="loadList(2)">列出未完成事項</button>
+    <button onclick="loadList(3)">列出所有事項</button>
+
+    <!-- main working div-->
+    <div id="main">
+        <p>hello 這裡會列出工作清單</p>
+    </div>
 </body>
+
 </html>
