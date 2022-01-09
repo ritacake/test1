@@ -1,6 +1,10 @@
+<!-- 用滑鼠操控聲音的例子 -->
 <script>
+// new 一個 Audio 物件，要放甚麼音樂
 var explode = new Audio('Explosion+3.mp3');
 var gun = new Audio('gun.mp3');
+
+// 是否要重複播放
 explode.loop=true;
 gun.loop=true;
 //audio.currentTime = 0;
@@ -15,7 +19,7 @@ function pauseNow(audio) {
 }
 
 </script>
-
+<!-- onmouseenter:滑鼠移進去執行甚麼程式, onmouseout:滑鼠移出來要執行甚麼程式 -->
 <img src="images\explode.jpg" onmouseenter="playNow(explode)" onmouseout="pauseNow(explode)">
 <br>
 <img src="images\bomb.jpg" onmouseenter="playNow(gun)" onmouseout="pauseNow(gun)">
