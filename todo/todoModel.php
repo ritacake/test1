@@ -6,7 +6,10 @@ function addJob($title,$note) {
 	$stmt = mysqli_prepare($db, $sql); //prepare sql statement
 	mysqli_stmt_bind_param($stmt, "ss", $title, $note); //bind parameters with variables
 	mysqli_stmt_execute($stmt);  //執行SQL
-
+	
+	// 抓所有資料
+	// getJobList(3);
+	
 	return true;
 }
  

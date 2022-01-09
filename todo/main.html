@@ -28,15 +28,16 @@
             // Build the table body
             const body = `<tr>
                 <form id="addJobForm" method="post" action="">
-                <input name="act" type="hidden" value='addJob' />
+                <input id="act" name="act" type="hidden" value='addJob' />
                 <td><label>
-                        <input name="title" type="text" id="title" />
+                    <input name="title" type="text" id="title" />
                     </label></td>
                 <td><label>
-                        <input name="note" type="text" id="note" />
+                    <input name="note" type="text" id="note" />
                     </label></td>
                 <td><label>
-                        <button onclick="postForm('todoControlAjax.php?act=addJob', 'addJobForm')">送出</button>
+                    <input type="submit" name="submit"  value="送出按鈕" onclick="postForm('todoControlAjax.php', 'addJobForm', 'act')" />
+                    <button onclick="postForm('todoControlAjax.php', 'addJobForm', 'act')">送出</button>
                     </label></td>
             </form>
                 </tr>`;
@@ -95,17 +96,34 @@
 
         // url    
         // formID 哪個 form
-        function postForm(url, formID) {
+        function postForm(url, formID, actID) {
             // 把表單裡的值，變成新的 FormData 的形式
             let mydat = new FormData();
             myform = document.getElementById(formID);
+
+            let act = document.getElementById(actID).value;
+            let titleValue = document.getElementById("title").value;
+            console.log("title value" + titleValue)
+            url += '?act=' + act;
+            console.log("URL:  " + url);
+            console.log("formID:  " + formID);
+            console.log("actID:  " + actID);
             // 根據 myForm 產生一個 FormData 的物件
             // pair 表單裡的每個欄位	
             for (const pair of new FormData(myform)) {
+                console.log("HELLO");
                 // 把欄位裡的名稱、值塞進表單裡
                 // pair[0]:pair[1] = key:value
+                console.log(pair);
+                let key = pair[0];
+                console.log("pair 0: " + pair[0] + " ");
+                console.log("pair 1: " + pair[1] + " ");
+                let value = document.getElementById(pair[0]).value;
+                console.log("# value: " + value + " ");
                 mydat.append(pair[0], pair[1]);
             }
+            console.log("mydat:" + mydat);
+
             fetch(url, {
                 method: 'POST',
                 body: mydat
@@ -115,17 +133,18 @@
                 .then(
                     function (res) {
                         console.log(res)
-                        return res.json();
+                        // return res.json();
+                        return res.text();
                     }
                 )
-            // .then(
-            //     function (data) {
-            //         console.log(data)
-            //         // 把 data 放進 main
-            //         loadList(3);
-            //         // json2table(data, 'main');
-            //     }
-            // )
+                .then(
+                    function (data) {
+                        console.log(data)
+                        // 把 data 放進 main
+                        loadList(3);
+                        // json2table(data, 'main');
+                    }
+                )
         }
 
 
@@ -168,18 +187,16 @@
 
     <!-- <p><a href='insertUI.php'></a></p> -->
     <p><button onclick="addJobTable('addJobTable')">新增工作</button></p>
-    <p>新增工作</p>
+    <!-- <p>新增工作</p>
     <table width="200" border="1">
         <tr>
             <td>title</td>
             <td>note</td>
             <td></td>
         </tr>
-        <tr>
-            <form id="addJobForm" method="post" action="">
-                <!-- 多送一個參數，名字叫"act", 不顯示, value='addJob'(value的值可以自己取)  -->
-                <!-- 多送一個訊息說我現在要做甚麼事 ，也就是 'addJob' -->
-                <input name="act" type="hidden" value='addJob' />
+        <tr> -->
+            <!-- <form id="addJobForm" method="post" >
+                <input id="act" name="act" type="hidden" value='addJob' />
                 <td><label>
                         <input name="title" type="text" id="title" />
                     </label></td>
@@ -187,12 +204,27 @@
                         <input name="note" type="text" id="note" />
                     </label></td>
                 <td><label>
-                        <!-- <input type="submit" name="Submit" value="送出" /> -->
-                        <button onclick="postForm('todoControlAjax.php?act=addJob', 'addJobForm')">送出</button>
+                        <input type="submit" name="Submit" value="送出按鈕" />
+                        <button onclick="postForm('todoControlAjax.php', 'addJobForm', 'act')">送出</button>
+                    </label></td>
+            </form> -->
+
+            <!-- <form id="addJobForm1" method="post" action="">
+                <input id="act1" name="act1" type="hidden" value='addJob' />
+                <td><label>
+                        <input name="title" type="text" id="title" />
+                    </label></td>
+                <td><label>
+                        <input name="note" type="text" id="note" />
+                    </label></td>
+                <td><label>
+                        <input type="submit" name="submit" value="送出按鈕" />
+                        <button onclick="postForm('todoControlAjax.php', 'addJobForm1', 'act1')">送出</button>
                     </label></td>
             </form>
+
         </tr>
-    </table>
+    </table> -->
 
     <div id="addJobTable"></div>
     <div id="newJob"></div>
