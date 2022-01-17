@@ -15,9 +15,9 @@ $testcase=[
 foreach ($testcase as $t) {
     echo "testing {$t[0]}, {$t[1]}";
     if (getAvg($t[0], $t[1]) == $t[2]) {
-        echo "... pass\n";
+        echo "... pass\n"; // 通過
     } else {
-        echo "... failed\n";		
+        echo "... failed\n"; // 不通過	
     }
 }
 

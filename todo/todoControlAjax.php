@@ -8,11 +8,6 @@ if (isset($_REQUEST['act'])) { // 如果存在
 switch ($act) {
     // 新增一個新工作
     case "addJob":
-        // $titleFile = $_FILES['']['tmp_name'];
-        // $noteFile = $_FILES['myfile']['tmp_name'];
-        // echo $titleFile;
-        // echo $noteFile;
-
         $title=$_POST['title'];
         $note=$_POST['note'];
         echo $title;

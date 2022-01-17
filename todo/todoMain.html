@@ -7,13 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AJAX example</title>
 
-    <!-- import CSS 
-    <link rel="stylesheet" href="js/jquery-ui.min.css">
-    <style>
-    </style>
-    <script src="js/vue.global.prod.js"></script>
-
--->
     <script>
         // 載入 新增工作 的表格
         function addJobTable(divID) {
@@ -36,12 +29,11 @@
                     <input name="note" type="text" id="note" />
                     </label></td>
                 <td><label>
-                    <input type="submit" name="Submit" value="送出123" />
+                    <button onclick="postForm('todoControlAjax.php', 'addJobForm', 'act')">送出</button>
                     </label></td>
             </form>
                 </tr>`;
-            // <input type="submit" name="submit"  value="送出按鈕" onclick="postForm('todoControlAjax.php', 'addJobForm', 'act')">
-            // <button onclick="postForm('todoControlAjax.php', 'addJobForm', 'act')">送出</button>
+                
             // Build the final table
             const table = `
         <table width="200" border='2'>
@@ -102,26 +94,32 @@
             myform = document.getElementById(formID);
 
             let act = document.getElementById(actID).value;
-            let titleValue = document.getElementById("title").value;
-            console.log("title value" + titleValue)
+            let title = document.getElementById("title");
+            let note = document.getElementById("note");
+            console.log("title value:   " + title.value)
+            console.log("note value:   " + note.value)
             url += '?act=' + act;
             console.log("URL:  " + url);
             console.log("formID:  " + formID);
             console.log("actID:  " + actID);
+
             // 根據 myForm 產生一個 FormData 的物件
             // pair 表單裡的每個欄位	
-            for (const pair of new FormData(myform)) {
-                console.log("HELLO");
-                // 把欄位裡的名稱、值塞進表單裡
-                // pair[0]:pair[1] = key:value
-                console.log(pair);
-                let key = pair[0];
-                console.log("pair 0: " + pair[0] + " ");
-                console.log("pair 1: " + pair[1] + " ");
-                let value = document.getElementById(pair[0]).value;
-                console.log("# value: " + value + " ");
-                mydat.append(pair[0], pair[1]);
-            }
+            // 問為甚麼進不了for迴圈
+            // for (const pair of new FormData(myform)) {
+            //     console.log("HELLO");
+            //     // 把欄位裡的名稱、值塞進表單裡
+            //     // pair[0]:pair[1] = key:value
+            //     console.log(pair);
+            //     let key = pair[0];
+            //     console.log("pair 0: " + pair[0] + " ");
+            //     console.log("pair 1: " + pair[1] + " ");
+            //     let value = document.getElementById(pair[0]).value;
+            //     console.log("# value: " + value + " ");
+            //     mydat.append(pair[0], pair[1]);
+            // }
+            mydat.append('title', title.value);
+            mydat.append('note', note.value);
             console.log("mydat:" + mydat);
 
             fetch(url, {
@@ -171,7 +169,6 @@
           ${body}
         </table>
         `;
-
             // Append the result into #root element
             document.getElementById(divID).innerHTML = table;
         }
@@ -185,68 +182,7 @@
 
 <body>
     <p><button onclick="addJobTable('addJobTable')">新增工作</button></p>
-    <!-- <p>新增工作</p>
-    <table width="200" border="1">
-        <tr>
-            <td>title</td>
-            <td>note</td>
-            <td></td>
-        </tr>
-        <tr> -->
-    <!-- <form id="addJobForm" method="post" >
-                <input id="act" name="act" type="hidden" value='addJob' />
-                <td><label>
-                        <input name="title" type="text" id="title" />
-                    </label></td>
-                <td><label>
-                        <input name="note" type="text" id="note" />
-                    </label></td>
-                <td><label>
-                        <input type="submit" name="Submit" value="送出按鈕" />
-                        <button onclick="postForm('todoControlAjax.php', 'addJobForm', 'act')">送出</button>
-                    </label></td>
-            </form> -->
-
-    <!-- <form id="addJobForm1" method="post" action="">
-                <input id="act1" name="act1" type="hidden" value='addJob' />
-                <td><label>
-                        <input name="title" type="text" id="title" />
-                    </label></td>
-                <td><label>
-                        <input name="note" type="text" id="note" />
-                    </label></td>
-                <td><label>
-                        <input type="submit" name="submit" value="送出按鈕" />
-                        <button onclick="postForm('todoControlAjax.php', 'addJobForm1', 'act1')">送出</button>
-                    </label></td>
-            </form>
-
-        </tr>
-    </table> -->
-    <table width="200" border="1">
-        <tr>
-            <td>title</td>
-            <td>note</td>
-            <td></td>
-        </tr>
-        <tr>
-            <form id="addJobForm" method="post" action="">
-                <input id="act" name="act" type="hidden" value='addJob' />
-                <td><label>
-                        <input name="title" type="text" id="title" />
-                    </label></td>
-                <td><label>
-                        <input name="note" type="text" id="note" />
-                    </label></td>
-                <td><label>
-                        <button onclick="postForm('todoControlAjax.php', 'addJobForm', 'act')">送出</button>
-                    </label></td>
-            </form>
-        </tr>
-    </table>
-
-    <div id="addJobTable"></div>
-    <div id="newJob"></div>
+    <div id="addJobTable">addJobTable</div>
 
     <hr>
     <button onclick="loadList(1)">列出已完成事項</button>
