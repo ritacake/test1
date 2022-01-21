@@ -26,36 +26,49 @@ source: https://gist.github.com/tanmaykm/5111225
 			var s; //socket object for connection
 			function doInit() {
 				try {
-					var host = "ws://localhost:4545/"; //設定socker server的ip:port
+					// 主機，let 區塊層級的變數
+					// ws : websocket protocol
+					let host = "ws://localhost:4545/"; //設定socker server的ip:port
+					
+					// 拿windows的主機名稱做主機名稱 (範例程式，可不用理)
 					/*if(window.location.hostname) {
 						host = "ws://" + window.location.hostname + ":4545/";
 					}*/
 
 					s = new WebSocket(host); //建立socket元件
 					//設定幾個主要事件
+					// 連線成功 -> 引到 function {call log_msg 函數}
 					s.onopen = function (e) { log_msg("connected..."); };
+					// 連線結束
 					s.onclose = function (e) { log_msg("connection closed."); };
+					// 連線失敗
 					s.onerror = function (e) { log_msg("connection error."); };
 					
 					//當server送訊息來時
 					s.onmessage = function (e) { 
+						// e.data 取得 server 送過來的訊息
 						log_msg("message: " + e.data);
 					};
 				} catch (ex) {
+					// 如果發生意外的話
 					log_msg("connection exception:" + ex);
 				}
 			}
 			
 			function sendMsg() {
+				// 送訊息至 (id = 'message')
 				inputBox = document.getElementById('message')
+				// 訊息送給 server
 				s.send(inputBox.value);
+				// 把前端輸入訊息的地方清空
 				inputBox.value = "";
 			}
 		</script>		
 	</head>
-<body onload="doInit()">
+	<!-- 當頁面載入 執行 doInit() -->
+<body onload="doInit()"> 
 		<input type="text" id="message">
-		<button onclick="sendMsg()">Send</button>
+		<button onclick="sendMsg()">Send</button> 
 	<br/>
 	<div id="messages"></div> 
 </body>

@@ -30,6 +30,7 @@ source: https://gist.github.com/tanmaykm/5111225
 					s.onclose = function (e) { log_msg("connection closed."); };
 					s.onerror = function (e) { log_msg("connection error."); };
 					
+					// 因為 protocol 改變，所以做的事情也改變
 					//當server送訊息來時
 					s.onmessage = function (e) { 
 						log_msg("message: " + e.data);
@@ -72,6 +73,7 @@ source: https://gist.github.com/tanmaykm/5111225
 <body onload="doInit()">
 	圈叉棋<br/>
 	輸入使用的符號<input type='text' value='O' id='sign'>
+	<!-- 預設是一個點，每一個 td 都有一個 id -->
 	<table border="1" width="500px" height="500px">
 	<tr><td class='cell' id='00'>.</td><td  class='cell' id='10'>.</td><td  class='cell' id='20'>.</td></tr>
 	<tr><td class='cell' id='01'>.</td><td  class='cell' id='11'>.</td><td  class='cell' id='21'>.</td></tr>
